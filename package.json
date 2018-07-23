@@ -1,0 +1,89 @@
+{
+  "name": "@banzaicloud/service-tools",
+  "version": "",
+  "author": "Andras Toth",
+  "license": "Apache-2.0",
+  "description": "Node.js service tools for common use cases",
+  "keywords": [
+    "kubernetes",
+    "microservice",
+    "koa",
+    "middleware",
+    "health",
+    "check",
+    "graceful",
+    "logger",
+    "prometheus",
+    "metrics"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "test": "npm run lint && npm run unit-test",
+    "unit-test": "jest",
+    "fmt": "prettier --find-config-path --write '{src,examples}/**/*.{js,ts}' && npm run lint -- --fix",
+    "lint": "tslint --project tsconfig.json",
+    "precommit": "pretty-quick --staged && npm test && generate-attribution && git add oss-attribution",
+    "prepush": "npm run build && npm test",
+    "prepublishOnly": "npm run build && npm run test"
+  },
+  "devDependencies": {
+    "@babel/core": "7.0.0-beta.55",
+    "@types/http-errors": "1.6.1",
+    "@types/jest": "23.3.1",
+    "@types/joi": "13.4.0",
+    "@types/koa": "2.0.46",
+    "@types/lodash": "4.14.116",
+    "@types/node": "10.5.5",
+    "@types/pino": "4.16.1",
+    "@types/request-promise-native": "1.0.15",
+    "husky": "0.14.3",
+    "jest": "23.4.2",
+    "jest-mock-console": "0.4.0",
+    "koa": "2.5.2",
+    "oss-attribution-generator": "1.7.1",
+    "prettier": "1.14.0",
+    "prettier-tslint": "0.4.0",
+    "pretty-quick": "1.6.0",
+    "ts-jest": "23.1.0",
+    "ts-node": "7.0.0",
+    "tslint": "5.11.0",
+    "tslint-config-prettier": "1.14.0",
+    "typescript": "3.0.1"
+  },
+  "peerDependencies": {
+    "koa": "2.5.1"
+  },
+  "dependencies": {
+    "http-errors": "1.7.0",
+    "joi": "13.5.2",
+    "lodash": "4.17.10",
+    "pino": "4.17.6",
+    "prom-client": "11.1.1",
+    "request-promise-native": "1.0.5"
+  },
+  "optionalDependencies": {
+    "dotenv": "6.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/?(*.)+(spec|test).(ts|js)",
+      "**/__tests__/*.+(ts|js)"
+    ],
+    "resetMocks": true
+  }
+}

@@ -4,6 +4,11 @@
   "author": "Andras Toth",
   "license": "Apache-2.0",
   "description": "Node.js service tools for common use cases",
+  "homepage": "https://github.com/banzaicloud/node-service-tools#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/banzaicloud/node-service-tools"
+  },
   "keywords": [
     "kubernetes",
     "microservice",

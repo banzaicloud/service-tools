@@ -1,19 +1,22 @@
 import defaultLogger from './logger'
 
-export default function catchErrors({
-  exitOnUncaughtPromiseException = true,
-  logger = defaultLogger.fatal.bind(defaultLogger),
-  closeResources = () => Promise.resolve(),
-} = {}) {
+export default function catchErrors(
+  closeHandlers: Array<() => Promise<any>> = [],
+  { exitOnUncaughtPromiseException = true, logger = defaultLogger.fatal.bind(defaultLogger) } = {}
+) {
   // it is not safe to resume normal operation after 'uncaughtException'.
   // read more: https://nodejs.org/api/process.html#process_event_uncaughtexception
   const uncaughtExceptionHandler = async (err: Error) => {
     logger(err, 'uncaught exception')
-    try {
-      await closeResources()
-    } catch (err) {
-      logger(err, 'failed to close resources')
+
+    for (const handler of closeHandlers) {
+      try {
+        await handler()
+      } catch (err) {
+        logger(err, 'failed to close resource')
+      }
     }
+
     process.exit(1)
   }
   process.on('uncaughtException', uncaughtExceptionHandler)
@@ -22,11 +25,15 @@ export default function catchErrors({
   // read more: https://nodejs.org/api/process.html#process_event_unhandledrejection
   const unhandledRejectionHandler = async (reason: PromiseRejectionEvent) => {
     logger(reason, 'unhandled promise rejection')
-    try {
-      await closeResources()
-    } catch (err) {
-      logger(err, 'failed to close resources')
+
+    for (const handler of closeHandlers) {
+      try {
+        await handler()
+      } catch (err) {
+        logger(err, 'failed to close resource')
+      }
     }
+
     if (exitOnUncaughtPromiseException) {
       process.exit(1)
     }

@@ -3,7 +3,7 @@ import defaultLogger from '../../logger'
 
 export default function healthCheckFactory(
   checks: Array<() => Promise<any>> = [],
-  { logger = defaultLogger.error } = {}
+  { logger = defaultLogger.error.bind(defaultLogger) } = {}
 ) {
   // respond with '503 Service Unavailable' once the termination signal is received
   let shuttingDown = false

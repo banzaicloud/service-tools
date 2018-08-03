@@ -1,10 +1,9 @@
 import { Context, Request } from 'koa'
 import * as fp from 'lodash/fp'
 import { Stream } from 'stream'
+import defaultLogger from '../../logger'
 
-export default function requestLoggerFactory(
-  { logger }: { logger: (...args: any[]) => void } = { logger: console.debug }
-) {
+export default function requestLoggerFactory({ logger = defaultLogger.debug.bind(defaultLogger) } = {}) {
   return async function requestLogger(ctx: Context, next: () => void) {
     const start = Date.now()
 

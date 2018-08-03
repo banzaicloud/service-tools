@@ -1,10 +1,11 @@
 import * as createError from 'http-errors'
 import { Context } from 'koa'
+import defaultLogger from '../../logger'
 
 /**
  * Koa error handler middleware.
  */
-export default function errorHandlerFactory({ logger = console.error } = {}) {
+export default function errorHandlerFactory({ logger = defaultLogger.error.bind(defaultLogger) } = {}) {
   return async function errorHandler(ctx: Context, next: () => void) {
     try {
       await next()

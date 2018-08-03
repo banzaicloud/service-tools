@@ -3,11 +3,13 @@ import logger from './logger'
 
 describe('catch errors', () => {
   let reset: () => void
+  let closeHandler
 
   beforeEach(() => {
+    closeHandler = jest.fn().mockResolvedValue(undefined)
     jest.spyOn(logger, 'fatal').mockReturnValue(undefined)
     jest.spyOn(process, 'exit').mockReturnValue(undefined)
-    reset = catchErrors()
+    reset = catchErrors([closeHandler])
   })
 
   afterEach(() => {
@@ -21,6 +23,7 @@ describe('catch errors', () => {
     // wait for promises
     await new Promise((resolve) => setImmediate(resolve))
     expect(logger.fatal).toHaveBeenCalledWith(err, 'uncaught exception')
+    expect(closeHandler).toHaveBeenCalled()
     expect(process.exit).toHaveBeenCalledWith(1)
   })
 
@@ -35,6 +38,7 @@ describe('catch errors', () => {
     // wait for promises
     await new Promise((resolve) => setImmediate(resolve))
     expect(logger.fatal).toHaveBeenCalledWith(reason, 'unhandled promise rejection')
+    expect(closeHandler).toHaveBeenCalled()
     expect(process.exit).toHaveBeenCalledWith(1)
   })
 })

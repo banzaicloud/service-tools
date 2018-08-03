@@ -211,10 +211,10 @@ const bodySchema = joi.object({ name: joi.string().required() }).required()
 
 const querySchema = joi.object({ include: joi.array().default([]) }).required()
 
-async function routeHandler(ctx, next) {
+router.get('/', async function routeHandler(ctx) {
   const { params, body, query } = ctx.state.validated
   // ...
-}
+})
 
 app.use(bodyParser())
 // query parser

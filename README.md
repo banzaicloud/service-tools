@@ -1,6 +1,8 @@
-# Node.js Service Tools
+# Node.js Service Tools <br> [![CircleCI](https://circleci.com/gh/banzaicloud/node-service-tools.svg?style=svg&circle-token=002bb942365281c0834e18a1cb83e1930c3ce0fa)](https://circleci.com/gh/banzaicloud/node-service-tools) [![npm version](https://badge.fury.io/js/%40banzaicloud%2Fservice-tools.svg)](https://badge.fury.io/js/%40banzaicloud%2Fservice-tools)
 
 Prepare your Node.js application for production!
+
+This library provides common functionalities, like graceful error handling & shutdown, structured JSON logging and several HTTP middleware to make your application truly ready for modern containerised environments, like [Kubernetes](http://kubernetes.io/).
 
 <!-- TOC -->
 

@@ -40,25 +40,10 @@ export default function getConfig() {
     .map((field) => field.trim())
     .filter(Boolean)
 
-  const config: LoggerOptions = {
+  // NOTE: remeve when type includes redact field
+  const config: LoggerOptions & { redact: string[] } = {
     level: envVars.LOGGER_LEVEL,
-    serializers: {
-      [Symbol.for('pino.*')](entry: object) {
-        const jsonReplacer = (key: string, value: any) => {
-          if (redactFields.includes(key)) {
-            return '[REDACTED]'
-          }
-
-          return value
-        }
-
-        try {
-          return JSON.parse(JSON.stringify(entry, jsonReplacer))
-        } catch (err) {
-          return err
-        }
-      },
-    },
+    redact: redactFields,
   }
 
   return config

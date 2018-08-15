@@ -2,10 +2,6 @@ import { BadRequest } from 'http-errors'
 import * as joi from 'joi'
 import { Context } from 'koa'
 
-/**
- * Koa request validator middleware
- * returns with 400 if the request is not valid
- */
 export default function requestValidatorFactory({ params = joi.any(), query = joi.any(), body = joi.any() } = {}) {
   const schema = joi
     .object({

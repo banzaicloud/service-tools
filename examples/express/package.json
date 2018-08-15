@@ -1,0 +1,10 @@
+{
+  "name": "@banzaicloud/service-tools-express-example",
+  "main": "index.js",
+  "dependencies": {
+    "@banzaicloud/service-tools": "../../",
+    "express": "4.16.3",
+    "joi": "13.6.0",
+    "stoppable": "1.0.6"
+  }
+}

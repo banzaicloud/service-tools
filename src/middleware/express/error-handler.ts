@@ -2,9 +2,6 @@ import { ErrorRequestHandler, NextFunction, Request, Response } from 'express'
 import * as createError from 'http-errors'
 import defaultLogger from '../../logger'
 
-/**
- * Express error handler middleware.
- */
 export default function errorHandlerFactory({
   logger = defaultLogger.error.bind(defaultLogger),
 } = {}): ErrorRequestHandler {

@@ -2,10 +2,6 @@ import { NextFunction, Request, RequestHandler, Response } from 'express'
 import { BadRequest } from 'http-errors'
 import * as joi from 'joi'
 
-/**
- * Express request validator middleware
- * returns with 400 if the request is not valid
- */
 export default function requestValidatorFactory({
   params = joi.any(),
   query = joi.any(),

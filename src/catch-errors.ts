@@ -2,16 +2,24 @@ import defaultLogger from './logger'
 
 export default function catchErrors(
   closeHandlers: Array<() => Promise<any>> = [],
-  { exitOnUncaughtPromiseException = true, logger = defaultLogger.fatal.bind(defaultLogger) } = {}
+  { exitOnUncaughtPromiseException = true, logger = defaultLogger.fatal.bind(defaultLogger), timeout = 30 } = {}
 ) {
   // it is not safe to resume normal operation after 'uncaughtException'.
   // read more: https://nodejs.org/api/process.html#process_event_uncaughtexception
   const uncaughtExceptionHandler = async (err: Error) => {
     logger(err, 'uncaught exception')
 
+    // shut down anyway after `timeout` seconds
+    if (timeout) {
+      setTimeout(() => {
+        logger('could not finish in time, forcefully exiting')
+        process.exit(1)
+      }, timeout * 1000).unref()
+    }
+
     for (const handler of closeHandlers) {
       try {
-        await handler()
+        await Promise.resolve(handler())
       } catch (err) {
         logger(err, 'failed to close resource')
       }
@@ -26,9 +34,17 @@ export default function catchErrors(
   const unhandledRejectionHandler = async (reason: PromiseRejectionEvent) => {
     logger(reason, 'unhandled promise rejection')
 
+    // shut down anyway after `timeout` seconds
+    if (timeout) {
+      setTimeout(() => {
+        logger('could not finish in time, forcefully exiting')
+        process.exit(1)
+      }, timeout * 1000).unref()
+    }
+
     for (const handler of closeHandlers) {
       try {
-        await handler()
+        await Promise.resolve(handler())
       } catch (err) {
         logger(err, 'failed to close resource')
       }

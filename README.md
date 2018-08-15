@@ -9,10 +9,10 @@ This library provides common functionalities, like graceful error handling & shu
 - [Installation](#installation)
 - [Usage](#usage)
   - [Main exports](#main-exports)
+    - [`catchErrors(options)`](#catcherrorsoptions)
+    - [`gracefulShutdown(handlers, options)`](#gracefulshutdownhandlers-options)
     - [`logger`](#logger)
       - [Use provided logger instead of `console`](#use-provided-logger-instead-of-console)
-    - [`gracefulShutdown(handlers, options)`](#gracefulshutdownhandlers-options)
-    - [`catchErrors(options)`](#catcherrorsoptions)
   - [Config](#config)
     - [`config.environment`](#configenvironment)
     - [`config.pino`](#configpino)
@@ -21,6 +21,12 @@ This library provides common functionalities, like graceful error handling & shu
     - [`healthCheck(checks, options)`](#healthcheckchecks-options)
     - [`prometheusMetrics(options)`](#prometheusmetricsoptions)
     - [`requestValidator(options)`](#requestvalidatoroptions)
+    - [`requestLogger(options)`](#requestloggeroptions)
+  - [Middleware (Express)](#middleware-express)
+    - [`errorHandler(options)`](#errorhandleroptions-1)
+    - [`healthCheck(checks, options)`](#healthcheckchecks-options-1)
+    - [`prometheusMetrics(options)`](#prometheusmetricsoptions-1)
+    - [`requestValidator(options)`](#requestvalidatoroptions-1)
 
 <!-- /TOC -->
 
@@ -36,9 +42,40 @@ This library is written in TypeScript, refer to the published types or the sourc
 
 ### Main exports
 
+#### `catchErrors(options)`
+
+Catch uncaught exceptions and unhandled Promise rejections. It is not safe to resume normal operation after ['uncaughtException'](https://nodejs.org/api/process.html#process_event_uncaughtexception).
+
+```js
+const { catchErrors } = require('@banzaicloud/service-tools')
+
+// ...
+
+// the handlers return a Promise
+// the handlers are called in order
+catchErrors([closeServer, closeDB])
+
+// the error will be catched and the handlers will be called before exiting
+throw new Error()
+```
+
+#### `gracefulShutdown(handlers, options)`
+
+Graceful shutdown: release resources (databases, HTTP connections, ...) before exiting. When the application receives `SIGTERM` or `SIGINT` signals, the close handlers will be called. The handlers should return a `Promise`.
+
+```js
+const { gracefulShutdown } = require('@banzaicloud/service-tools')
+
+// ...
+
+// the handlers return a Promise
+// the handlers are called in order
+gracefulShutdown([closeServer, closeDB])
+```
+
 #### `logger`
 
-A [pino](https://github.com/pinojs/pino) JSON logger instance configured with [`config.pino`](#config).
+A [pino](https://github.com/pinojs/pino) structured JSON logger instance configured with [`config.pino`](#config).
 
 ```js
 const { logger } = require('@banzaicloud/service-tools')
@@ -61,37 +98,6 @@ logger.interceptConsole()
 
 console.log('log message')
 // > {"level":30,"time":<ts>,"msg":"log message","pid":0,"hostname":"local","v":1}
-```
-
-#### `gracefulShutdown(handlers, options)`
-
-Graceful shutdown: release resources (databases, HTTP connections, ...) before exiting. When the application receives `SIGTERM` or `SIGINT` signals, the close handlers will be called. The handlers should return a `Promise`.
-
-```js
-const { gracefulShutdown } = require('@banzaicloud/service-tools')
-
-// ...
-
-// the handlers return a Promise
-// the handlers are called in order
-gracefulShutdown([closeServer, closeDB])
-```
-
-#### `catchErrors(options)`
-
-Catch uncaught exceptions and unhandled Promise rejections. It is not safe to resume normal operation after ['uncaughtException'](https://nodejs.org/api/process.html#process_event_uncaughtexception).
-
-```js
-const { catchErrors } = require('@banzaicloud/service-tools')
-
-// ...
-
-// the handlers return a Promise
-// the handlers are called in order
-catchErrors([closeServer, closeDB])
-
-// the error will be catched and the handlers will be called before exiting
-throw new Error()
 ```
 
 ### Config
@@ -164,7 +170,7 @@ app.use(router.allowedMethods())
 
 #### `prometheusMetrics(options)`
 
-Koa Prometheus metrics endpoint handler. By default it collects some [default metrics](https://github.com/siimon/prom-client#default-metrics).
+Koa [Prometheus](https://prometheus.io/) metrics endpoint handler. By default it collects some [default metrics](https://github.com/siimon/prom-client#default-metrics).
 
 ```js
 const Koa = require('koa')
@@ -176,7 +182,7 @@ const { koa: middleware } = require('@banzaicloud/service-tools').middleware
 const app = new Koa()
 const router = new Router()
 
-router.get('/metrics', middleware.koa.prometheusMetrics())
+router.get('/metrics', middleware.prometheusMetrics())
 
 app.use(router.routes())
 app.use(router.allowedMethods())
@@ -213,10 +219,14 @@ const bodySchema = joi.object({ name: joi.string().required() }).required()
 
 const querySchema = joi.object({ include: joi.array().default([]) }).required()
 
-router.get('/', async function routeHandler(ctx) {
-  const { params, body, query } = ctx.state.validated
-  // ...
-})
+router.get(
+  '/',
+  middleware.requestValidator({ params: paramsSchema, body: bodySchema, query: querySchema }),
+  async function routeHandler(ctx) {
+    const { params, body, query } = ctx.state.validated
+    // ...
+  }
+)
 
 app.use(bodyParser())
 // query parser
@@ -227,4 +237,108 @@ app.use(async function parseQuery(ctx, next) {
 })
 app.use(router.routes())
 app.use(router.allowedMethods())
+```
+
+#### `requestLogger(options)`
+
+Koa request logger middleware. Useful for local development and debugging.
+
+```js
+const Koa = require('koa')
+const { koa: middleware } = require('@banzaicloud/service-tools').middleware
+
+// ...
+
+const app = new Koa()
+
+// this should be the second middleware after the error handler
+// ...
+app.use(middleware.requestLogger())
+```
+
+### Middleware (Express)
+
+Several middleware for the [Express](https://expressjs.com/) web framework.
+
+#### `errorHandler(options)`
+
+Express error handler middleware.
+
+```js
+const express = require('express')
+const { express: middleware } = require('@banzaicloud/service-tools').middleware
+
+const app = express()
+
+// this should be the last middleware
+app.use(middleware.errorHandler())
+```
+
+#### `healthCheck(checks, options)`
+
+Express health check endpoint handler.
+
+```js
+const express = require('express')
+const { express: middleware } = require('@banzaicloud/service-tools').middleware
+
+// ...
+
+const app = express()
+
+// the checks return a Promise
+app.get('/health', middleware.healthCheck([checkDB]))
+```
+
+#### `prometheusMetrics(options)`
+
+Express [Prometheus](https://prometheus.io/) metrics endpoint handler. By default it collects some [default metrics](https://github.com/siimon/prom-client#default-metrics).
+
+```js
+const express = require('express')
+const { express: middleware } = require('@banzaicloud/service-tools').middleware
+
+// ...
+
+const app = express()
+
+app.get('/metrics', middleware.prometheusMetrics())
+```
+
+#### `requestValidator(options)`
+
+Express request validator middleware. Accepts [Joi](https://github.com/hapijs/joi) schemas for `body` (body parser required), `params` and `query`. Returns with `400` if the request is not valid. Assigns validated values to `req`.
+
+```js
+const joi = require('joi')
+const express = require('express')
+const { express: middleware } = require('@banzaicloud/service-tools').middleware
+
+// ...
+
+const app = express()
+
+const paramsSchema = joi
+  .object({
+    id: joi
+      .string()
+      .hex()
+      .length(64)
+      .required(),
+  })
+  .required()
+
+const bodySchema = joi.object({ name: joi.string().required() }).required()
+
+const querySchema = joi.object({ include: joi.array().default([]) }).required()
+
+app.use(express.json())
+app.get(
+  '/',
+  middleware.requestValidator({ params: paramsSchema, body: bodySchema, query: querySchema }),
+  function routeHandler(req, res) {
+    const { params, body, query } = req
+    // ...
+  }
+)
 ```

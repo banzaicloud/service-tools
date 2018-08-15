@@ -15,7 +15,7 @@ export default function registerGracefulShutdown(
   async function gracefulShutDown(signal = 'SIGTERM') {
     logger.info(`got kill signal (${signal}), starting graceful shut down`)
 
-    // shut down anyway after 30s
+    // shut down anyway after `timeout` seconds
     if (timeout) {
       setTimeout(() => {
         logger.error('could not finish in time, forcefully exiting')
@@ -27,7 +27,7 @@ export default function registerGracefulShutdown(
     let isError = false
     for (const handler of closeHandlers) {
       try {
-        await handler()
+        await Promise.resolve(handler())
       } catch (err) {
         logger.error(err, 'error happened during graceful shut down')
         isError = true

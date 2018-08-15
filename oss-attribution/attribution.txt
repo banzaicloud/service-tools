@@ -1197,7 +1197,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ******************************
 
 fast-redact
-1.1.13 <https://github.com/davidmarkclements/fast-redact>
+1.1.14 <https://github.com/davidmarkclements/fast-redact>
 The MIT License (MIT)
 
 Copyright (c) 2019-2020 David Mark Clements
@@ -2536,7 +2536,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ******************************
 
 pino
-5.0.1 <https://github.com/pinojs/pino>
+5.1.0 <https://github.com/pinojs/pino>
 The MIT License (MIT)
 
 Copyright (c) 2016-2018 Matteo Collina and the Pino contributors

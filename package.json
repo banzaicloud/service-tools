@@ -41,7 +41,7 @@
     "@types/joi": "13.4.2",
     "@types/koa": "2.0.46",
     "@types/lodash": "4.14.116",
-    "@types/node": "10.5.8",
+    "@types/node": "10.7.0",
     "@types/pino": "4.16.1",
     "@types/request-promise-native": "1.0.15",
     "express": "4.16.3",
@@ -67,7 +67,7 @@
     "http-errors": "1.7.0",
     "joi": "13.6.0",
     "lodash": "4.17.10",
-    "pino": "5.0.1",
+    "pino": "5.1.0",
     "prom-client": "11.1.1",
     "request-promise-native": "1.0.5"
   },

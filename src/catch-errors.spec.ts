@@ -3,7 +3,7 @@ import logger from './logger'
 
 describe('catch errors', () => {
   let reset: () => void
-  let closeHandler
+  let closeHandler: jest.Mock<{}>
 
   beforeEach(() => {
     closeHandler = jest.fn().mockResolvedValue(undefined)

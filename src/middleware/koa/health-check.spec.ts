@@ -41,11 +41,28 @@ describe('koa health check middleware', () => {
     expect(response.body).toEqual({ status: 'ok' })
     expect(logger).not.toHaveBeenCalled()
 
-    process.emit('SIGTERM')
+    process.emit('SIGTERM', 'SIGTERM')
 
     response = await makeRequest(server)
     expect(response.statusCode).toEqual(503)
     expect(response.body).toEqual({ status: 'error', details: { reason: 'service is shutting down' } })
+    expect(logger).not.toHaveBeenCalled()
+  })
+
+  it('should not respond with 503 status `error` when shutdown signal is received (serviceUnavailableOnTermination=false)', async () => {
+    app.use(healthCheck([() => Promise.resolve()], { logger, serviceUnavailableOnTermination: false }))
+
+    const server = http.createServer(app.callback())
+    let response = await makeRequest(server)
+    expect(response.statusCode).toEqual(200)
+    expect(response.body).toEqual({ status: 'ok' })
+    expect(logger).not.toHaveBeenCalled()
+
+    process.emit('SIGTERM', 'SIGTERM')
+
+    response = await makeRequest(server)
+    expect(response.statusCode).toEqual(200)
+    expect(response.body).toEqual({ status: 'ok' })
     expect(logger).not.toHaveBeenCalled()
   })
 })

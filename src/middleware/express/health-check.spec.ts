@@ -41,7 +41,7 @@ describe('express health check middleware', () => {
     expect(response.body).toEqual({ status: 'ok' })
     expect(logger).not.toHaveBeenCalled()
 
-    process.emit('SIGTERM')
+    process.emit('SIGTERM', 'SIGTERM')
 
     response = await makeRequest(server)
     expect(response.statusCode).toEqual(503)

@@ -1,8 +1,8 @@
-import mockConsole from 'jest-mock-console'
+import mockConsole, { RestoreConsole } from 'jest-mock-console'
 import logger from './'
 
 describe('logger', () => {
-  let restoreConsole
+  let restoreConsole: RestoreConsole
 
   beforeAll(() => {
     restoreConsole = mockConsole()

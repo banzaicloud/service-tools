@@ -3,8 +3,8 @@
   "main": "index.js",
   "dependencies": {
     "@banzaicloud/service-tools": "../../",
-    "express": "4.16.3",
-    "joi": "13.6.0",
-    "stoppable": "1.0.6"
+    "express": "^4.16.4",
+    "joi": "^14.1.0",
+    "stoppable": "^1.1.0"
   }
 }

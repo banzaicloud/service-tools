@@ -24,13 +24,13 @@ const app = new Koa()
 const router = new Router()
 
 // create routes
-router.get('/', (req, res) => {
-  res.status(200).end()
+router.get('/', (ctx) => {
+  ctx.status = 200
 })
-router.get('/metrics', middleware.express.prometheusMetrics())
+router.get('/metrics', middleware.koa.prometheusMetrics())
 router.get(
   '/health',
-  middleware.express.healthCheck([
+  middleware.koa.healthCheck([
     async () => {
       // fake check
       return new Promise((resolve, reject) => {

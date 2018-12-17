@@ -1,8 +1,17 @@
+import { LogFn } from 'pino'
 import defaultLogger from './logger'
 
 export default function catchErrors(
   closeHandlers: Array<() => Promise<any>> = [],
-  { exitOnUncaughtPromiseException = true, logger = defaultLogger.fatal.bind(defaultLogger), timeout = 30 } = {}
+  {
+    exitOnUncaughtPromiseException = true,
+    logger = defaultLogger.fatal.bind(defaultLogger) as LogFn,
+    timeout = 30,
+  }: {
+    exitOnUncaughtPromiseException?: boolean
+    logger?: LogFn
+    timeout?: number
+  } = {}
 ) {
   // it is not safe to resume normal operation after 'uncaughtException'.
   // read more: https://nodejs.org/api/process.html#process_event_uncaughtexception

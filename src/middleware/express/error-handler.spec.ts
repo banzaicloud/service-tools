@@ -1,6 +1,6 @@
+import * as express from 'express'
 import * as http from 'http'
 import * as createError from 'http-errors'
-import * as express from 'express'
 import makeRequest from '../../helper/make-request'
 import { errorHandler } from './'
 

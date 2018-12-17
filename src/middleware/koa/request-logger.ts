@@ -1,9 +1,12 @@
 import { Context, Request } from 'koa'
 import * as fp from 'lodash/fp'
+import { LogFn } from 'pino'
 import { Stream } from 'stream'
 import defaultLogger from '../../logger'
 
-export default function requestLoggerFactory({ logger = defaultLogger.debug.bind(defaultLogger) } = {}) {
+export default function requestLoggerFactory({
+  logger = defaultLogger.debug.bind(defaultLogger) as LogFn,
+}: { logger?: LogFn } = {}) {
   return async function requestLogger(ctx: Context, next: () => void) {
     const start = Date.now()
 
@@ -34,10 +37,13 @@ export default function requestLoggerFactory({ logger = defaultLogger.debug.bind
       body: responseBody instanceof Stream ? '[Stream]' : responseBody,
     })
 
-    logger(`${method}: ${originalUrl}`, {
-      httpRequest,
-      httpResponse,
-      duration: `${ms}ms`,
-    })
+    logger(
+      {
+        httpRequest,
+        httpResponse,
+        duration: `${ms}ms`,
+      },
+      `${method}: ${originalUrl}`
+    )
   }
 }

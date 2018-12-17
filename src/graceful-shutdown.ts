@@ -1,10 +1,14 @@
+import { LogFn } from 'pino'
 import defaultLogger from './logger'
 
 export default function registerGracefulShutdown(
   this: any,
   closeHandlers: Array<() => Promise<any>> = [],
   {
-    logger = { info: defaultLogger.info.bind(defaultLogger), error: defaultLogger.error.bind(defaultLogger) },
+    logger = {
+      info: defaultLogger.info.bind(defaultLogger) as LogFn,
+      error: defaultLogger.error.bind(defaultLogger) as LogFn,
+    },
     timeout = 30,
   } = {}
 ) {

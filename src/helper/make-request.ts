@@ -18,7 +18,7 @@ export default async function makeRequest(
     throw new TypeError('Parameter server is required to be an http.Server instance')
   }
 
-  const serverListen = promisify(server.listen).bind(server)
+  const serverListen: any = promisify(server.listen).bind(server)
   const serverClose = promisify(server.close).bind(server)
 
   // bind the server to a free port on localhost

@@ -34,11 +34,15 @@ This library provides common functionalities, like graceful error handling & shu
 
 ```sh
 npm i @banzaicloud/service-tools
+# or
+yarn add @banzaicloud/service-tools
 ```
 
 ## Usage
 
 This library is written in TypeScript, refer to the published types or the source code for argument and return types.
+
+**Examples are available for [Express](https://expressjs.com/) and [Koa](https://koajs.com/) frameworks. Check out the [examples](/examples) folder!**
 
 ### Main exports
 

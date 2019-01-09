@@ -37,7 +37,7 @@
     "@babel/core": "7.2.2",
     "@types/express": "4.16.0",
     "@types/http-errors": "1.6.1",
-    "@types/jest": "23.3.11",
+    "@types/jest": "23.3.12",
     "@types/joi": "14.0.1",
     "@types/koa": "2.0.48",
     "@types/lodash": "4.14.119",
@@ -50,8 +50,9 @@
     "jest-mock-console": "0.4.2",
     "koa": "2.6.2",
     "prettier": "1.15.3",
-    "prettier-tslint": "0.4.1",
+    "prettier-tslint": "0.4.2",
     "pretty-quick": "1.8.0",
+    "request-promise-native": "1.0.5",
     "ts-jest": "23.10.5",
     "ts-node": "7.0.1",
     "tslint": "5.12.0",
@@ -67,8 +68,7 @@
     "joi": "14.3.1",
     "lodash": "4.17.11",
     "pino": "5.10.6",
-    "prom-client": "11.2.1",
-    "request-promise-native": "1.0.5"
+    "prom-client": "11.2.1"
   },
   "optionalDependencies": {
     "dotenv": "^6.0.0"

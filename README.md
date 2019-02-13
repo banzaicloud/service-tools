@@ -59,7 +59,7 @@ const { catchErrors } = require('@banzaicloud/service-tools')
 // the handlers are called in order
 catchErrors([closeServer, closeDB])
 
-// the error will be catched and the handlers will be called before exiting
+// the error will be caught and the handlers will be called before exiting
 throw new Error()
 ```
 

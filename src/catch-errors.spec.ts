@@ -8,7 +8,9 @@ describe('catch errors', () => {
   beforeEach(() => {
     closeHandler = jest.fn().mockResolvedValue(undefined)
     jest.spyOn(logger, 'fatal').mockReturnValue(undefined)
-    jest.spyOn(process, 'exit').mockReturnValue(undefined)
+    jest.spyOn(process, 'exit').mockImplementation(() => {
+      /* noop */
+    })
     reset = catchErrors([closeHandler])
   })
 
@@ -29,7 +31,9 @@ describe('catch errors', () => {
 
   it('should catch unhandled promise rejections', async () => {
     jest.spyOn(logger, 'fatal').mockReturnValue(undefined)
-    jest.spyOn(process, 'exit').mockReturnValue(undefined)
+    jest.spyOn(process, 'exit').mockImplementation(() => {
+      /* noop */
+    })
     const reason = new Error()
     const promise = new Promise(() => {
       /* don't care */

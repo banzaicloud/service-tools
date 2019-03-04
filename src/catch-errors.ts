@@ -40,7 +40,7 @@ export default function catchErrors(
 
   // a Promise is rejected and no error handler is attached.
   // read more: https://nodejs.org/api/process.html#process_event_unhandledrejection
-  const unhandledRejectionHandler = async (reason: PromiseRejectionEvent) => {
+  const unhandledRejectionHandler = async (reason: any = {}, promise: Promise<any>) => {
     logger(reason, 'unhandled promise rejection')
 
     // shut down anyway after `timeout` seconds

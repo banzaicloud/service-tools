@@ -47,7 +47,7 @@
     "@types/joi": "14.3.2",
     "@types/koa": "2.0.48",
     "@types/lodash": "4.14.121",
-    "@types/node": "11.9.5",
+    "@types/node": "11.10.4",
     "@types/pino": "5.8.5",
     "@types/request-promise-native": "1.0.15",
     "express": "4.16.4",
@@ -61,7 +61,7 @@
     "request-promise-native": "1.0.7",
     "ts-jest": "24.0.0",
     "ts-node": "8.0.2",
-    "tslint": "5.13.0",
+    "tslint": "5.13.1",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.3.3333"
   },

@@ -7,8 +7,8 @@
 </p>
 
 <div align="center">
-  <a target="_blank" rel="noopener noreferrer" href="https://circleci.com/gh/banzaicloud/node-service-tools">
-    <img alt="CircleCI" title="CircleCI" src="https://circleci.com/gh/banzaicloud/node-service-tools.svg?style=svg&circle-token=002bb942365281c0834e18a1cb83e1930c3ce0fa" height="20">
+  <a target="_blank" rel="noopener noreferrer" href="https://circleci.com/gh/banzaicloud/service-tools">
+    <img alt="CircleCI" title="CircleCI" src="https://circleci.com/gh/banzaicloud/service-tools.svg?style=svg&circle-token=002bb942365281c0834e18a1cb83e1930c3ce0fa" height="20">
   </a>
   <a target="_blank" rel="noopener noreferrer" href="https://npmjs.com/package/@banzaicloud/service-tools">
     <img alt="npm version" title="npm version" src="https://badge.fury.io/js/%40banzaicloud%2Fservice-tools.svg" height="20">

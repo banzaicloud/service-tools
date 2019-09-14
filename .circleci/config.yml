@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
 
 version: 2
 jobs:
@@ -24,7 +24,7 @@ jobs:
           root: ~/repo
           paths:
             - .
-  deploy:
+  publish:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -32,27 +32,22 @@ jobs:
       # NPM
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}\n//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/repo/.npmrc
       - run:
           name: Publish package
-          command: npm publish
-      # GitHub Packages
-      - run:
-          name: Authenticate with registry
-          command: echo "registry=https://npm.pkg.github.com/@banzaicloud\n//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/repo/.npmrc
-      - run:
-          name: Publish package
-          command: npm publish
+          command: |
+            npm publish
+            npm publish --registry=https://npm.pkg.github.com
 
 workflows:
   version: 2
-  test-deploy:
+  test-publish:
     jobs:
       - test:
           filters:
             tags:
               only: /^v.*/
-      - deploy:
+      - publish:
           requires:
             - test
           filters:

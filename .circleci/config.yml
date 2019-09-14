@@ -32,7 +32,11 @@ jobs:
       # NPM
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}\n//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/repo/.npmrc
+          command: |
+            cat <<EOF >> .npmrc
+            //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+            //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+            EOF
       - run:
           name: Publish package
           command: |

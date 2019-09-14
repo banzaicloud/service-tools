@@ -1,6 +1,6 @@
 {
   "name": "@banzaicloud/service-tools",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "author": "Andras Toth",
   "license": "Apache-2.0",
   "description": "Node.js service tools for common use cases",

@@ -29,9 +29,17 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
+      # NPM
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+      # GitHub Packages
+      - run:
+          name: Authenticate with registry
+          command: echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/repo/.npmrc
       - run:
           name: Publish package
           command: npm publish

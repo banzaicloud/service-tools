@@ -69,9 +69,6 @@
     "koa": ">=2.5.2 < 3",
     "express": ">=4.16.3 < 5"
   },
-  "optionalDependencies": {
-    "dotenv": "^6.0.0"
-  },
   "jest": {
     "testEnvironment": "node",
     "moduleFileExtensions": [

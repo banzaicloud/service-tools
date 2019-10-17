@@ -24,18 +24,6 @@ export default function getConfig() {
     throw error
   }
 
-  if (envVars.NODE_ENV === 'development') {
-    // load .env in local development only
-    try {
-      // it can throw error as dotenv is an optional dependency only
-      // tslint:disable-next-line:no-var-requires
-      const dotenv = require('dotenv')
-      dotenv.config({ silent: true })
-    } catch (err) {
-      // ignore
-    }
-  }
-
   return {
     nodeEnv: envVars.NODE_ENV as string,
   }

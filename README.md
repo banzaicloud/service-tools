@@ -123,7 +123,7 @@ Load configurations dynamically.
 
 #### `config.environment`
 
-Dynamically load the environment config. It will become available on the `.environment` field. It exports the runtime environment and as a side-effect, it loads `.env` in development. Uses the `NODE_ENV` environment variable, with accepted values of: production, development, test.
+Uses the `NODE_ENV` environment variable, with accepted values of: production, development, test.
 
 ```js
 const { config } = require('@banzaicloud/service-tools')

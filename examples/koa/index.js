@@ -6,10 +6,6 @@ const { config, catchErrors, logger, middleware, gracefulShutdown } = require('@
 const stoppable = require('stoppable')
 const Koa = require('koa')
 const Router = require('koa-router')
-
-// when NODE_ENV is 'development', loads variables from .env as a side effect
-const { nodeEnv } = config.environment
-
 const cfg = require('./config')
 
 // catch all uncaught exceptions and unhandled promise rejections and exit application
@@ -17,6 +13,8 @@ catchErrors([closeResources])
 
 // intercept console calls and use built in (pino) logger instead
 logger.interceptConsole()
+
+const { nodeEnv } = config.environment
 console.log('starting application', { nodeEnv })
 
 // create koa application and router

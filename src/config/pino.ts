@@ -7,16 +7,13 @@ const envVarsSchema = joi
       .string()
       .valid(['fatal', 'error', 'warn', 'info', 'debug', 'trace'])
       .when('NODE_ENV', {
-        is: 'development',
-        then: joi.string().default('debug'),
-      })
-      .when('NODE_ENV', {
-        is: 'production',
-        then: joi.string().default('info'),
-      })
-      .when('NODE_ENV', {
         is: 'test',
         then: joi.string().default('fatal'),
+      })
+      .when('NODE_ENV', {
+        is: 'development',
+        then: joi.string().default('debug'),
+        otherwise: joi.string().default('info'),
       }),
     LOGGER_REDACT_FIELDS: joi
       .string()
@@ -40,8 +37,7 @@ export default function getConfig() {
     .map((field) => field.trim())
     .filter(Boolean)
 
-  // NOTE: remeve when type includes redact field
-  const config: LoggerOptions & { redact: string[] } = {
+  const config: LoggerOptions = {
     level: envVars.LOGGER_LEVEL,
     redact: redactFields,
   }

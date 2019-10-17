@@ -28,6 +28,10 @@ const envVarsSchema = joi
   .required()
 
 export default function getConfig() {
+
+  if (!process.env.LOGGER_LEVEL)
+    process.env.LOGGER_LEVEL = "debug"
+
   const { value: envVars, error } = joi.validate(process.env, envVarsSchema, { abortEarly: false })
   if (error) {
     // don't expose environment variables in stack traces / logs

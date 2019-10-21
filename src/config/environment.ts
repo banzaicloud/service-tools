@@ -1,5 +1,5 @@
 /**
- * Exports the runtime environment and as a side-effect, it loads .env in development
+ * Exports the runtime environment
  * Uses the `NODE_ENV` environment variable
  */
 

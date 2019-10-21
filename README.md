@@ -127,7 +127,7 @@ Uses the `NODE_ENV` environment variable, with accepted values of: production, d
 
 ```js
 const { config } = require('@banzaicloud/service-tools')
-// validates NODE_ENV environment variables when referenced first and load .env when it's "development"
+// validates the NODE_ENV environment variable
 console.log(config.environment)
 // > { nodeEnv: 'production' }
 ```

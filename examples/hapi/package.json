@@ -1,0 +1,9 @@
+{
+  "name": "@banzaicloud/service-tools-hapi-example",
+  "main": "index.js",
+  "dependencies": {
+    "@banzaicloud/service-tools": "../../",
+    "@hapi/joi": "16.1.7",
+    "stoppable": "1.1.0"
+  }
+}

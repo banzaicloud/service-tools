@@ -210,7 +210,7 @@ app.use(router.allowedMethods())
 Koa request validator middleware. Accepts [Joi](https://github.com/hapijs/joi) schemas for `body` (body parser required), `params` and `query` (query parser required). Returns with `400` if the request is not valid. Assigns validated values to `ctx.state.validated`.
 
 ```js
-const joi = require('joi')
+const joi = require('@hapi/joi')
 const qs = require('qs')
 const Koa = require('koa')
 const Router = require('koa-router')
@@ -327,7 +327,7 @@ app.get('/metrics', middleware.prometheusMetrics())
 Express request validator middleware. Accepts [Joi](https://github.com/hapijs/joi) schemas for `body` (body parser required), `params` and `query`. Returns with `400` if the request is not valid. Assigns validated values to `req`.
 
 ```js
-const joi = require('joi')
+const joi = require('@hapi/joi')
 const express = require('express')
 const { express: middleware } = require('@banzaicloud/service-tools').middleware
 

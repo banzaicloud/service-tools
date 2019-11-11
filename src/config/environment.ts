@@ -3,21 +3,21 @@
  * Uses the `NODE_ENV` environment variable
  */
 
-import * as joi from 'joi'
+import * as joi from '@hapi/joi'
 
-const envVarsSchema = joi
+const schema = joi
   .object({
     // runtime environment. Valid values are: production, development, test
     NODE_ENV: joi
       .string()
-      .valid(['production', 'development', 'test'])
+      .valid('production', 'development', 'test')
       .default('production'),
   })
   .unknown()
   .required()
 
 export default function getConfig() {
-  const { value: envVars, error } = joi.validate(process.env, envVarsSchema, { abortEarly: false })
+  const { value: envVars, error } = schema.validate(process.env, { abortEarly: false })
   if (error) {
     // don't expose environment variables in stack traces / logs
     delete error._object

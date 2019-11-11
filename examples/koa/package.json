@@ -3,7 +3,7 @@
   "main": "index.js",
   "dependencies": {
     "@banzaicloud/service-tools": "../../",
-    "joi": "14.3.1",
+    "@hapi/joi": "16.1.7",
     "koa": "2.10.0",
     "koa-router": "7.4.0",
     "stoppable": "1.1.0"

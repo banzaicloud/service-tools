@@ -1,6 +1,6 @@
+import * as joi from '@hapi/joi'
 import { NextFunction, Request, RequestHandler, Response } from 'express'
 import { BadRequest } from 'http-errors'
-import * as joi from 'joi'
 
 export default function requestValidatorFactory({
   params = joi.any(),
@@ -16,13 +16,14 @@ export default function requestValidatorFactory({
     .required()
 
   return function requestValidator(req: Request, res: Response, next: NextFunction) {
-    const toValidate = {
-      params: req.params,
-      query: req.query,
-      body: req.body,
-    }
-
-    const { value: validated, error } = joi.validate(toValidate, schema, { abortEarly: false })
+    const { value: validated, error } = schema.validate(
+      {
+        params: req.params,
+        query: req.query,
+        body: req.body,
+      },
+      { abortEarly: false }
+    )
     if (error) {
       const err = Object.assign(new BadRequest('validation error'), { details: error.details })
       return next(err)

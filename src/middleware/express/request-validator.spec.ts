@@ -1,6 +1,6 @@
-import * as http from 'http'
 import * as joi from '@hapi/joi'
 import * as express from 'express'
+import * as http from 'http'
 import makeRequest from '../../helper/make-request'
 import { requestValidator } from './'
 

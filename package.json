@@ -21,10 +21,10 @@
     "prometheus",
     "metrics"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
-    "build": "tsc --build tsconfig.json",
+    "build": "tsc --build --clean && tsc --build tsconfig.json",
     "test": "npm run lint && npm run unit-test",
     "unit-test": "jest",
     "fmt": "prettier --find-config-path --write '{src,examples}/**/*.{js,ts,json}' && npm run lint -- --fix",
@@ -34,6 +34,7 @@
     "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
+    "@hapi/boom": "7.4.11",
     "@hapi/joi": "16.1.7",
     "http-errors": "1.7.3",
     "lodash": "4.17.15",
@@ -41,7 +42,9 @@
     "prom-client": "11.5.3"
   },
   "devDependencies": {
+    "@hapi/hapi": "18.4.0",
     "@types/express": "4.17.2",
+    "@types/hapi__hapi": "18.2.6",
     "@types/hapi__joi": "16.0.3",
     "@types/http-errors": "1.6.2",
     "@types/jest": "24.0.22",
@@ -66,8 +69,9 @@
     "typescript": "3.7.2"
   },
   "peerDependencies": {
-    "koa": ">=2.5.2 < 3",
-    "express": ">=4.16.3 < 5"
+    "@hapi/hapi": ">=18.4.0 < 19.0.0",
+    "express": ">=4.16.3 < 5.0.0",
+    "koa": ">=2.5.2 < 3.0.0"
   },
   "jest": {
     "testEnvironment": "node",

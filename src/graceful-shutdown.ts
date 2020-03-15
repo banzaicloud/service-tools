@@ -2,6 +2,7 @@ import { LogFn } from 'pino'
 import defaultLogger from './logger'
 
 export default function registerGracefulShutdown(
+  // https://www.typescriptlang.org/docs/handbook/functions.html#this-parameters
   this: any,
   closeHandlers: Array<() => Promise<any>> = [],
   {

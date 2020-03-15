@@ -3,9 +3,9 @@
   "main": "index.js",
   "dependencies": {
     "@banzaicloud/service-tools": "../../",
-    "@hapi/joi": "16.1.7",
-    "koa": "2.10.0",
-    "koa-router": "7.4.0",
+    "@hapi/joi": "17.1.1",
+    "koa": "2.11.0",
+    "koa-router": "8.0.8",
     "stoppable": "1.1.0"
   }
 }

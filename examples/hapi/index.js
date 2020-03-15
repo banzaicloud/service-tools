@@ -23,7 +23,7 @@ server.route({
   method: 'GET',
   path: '/',
   handler(req, h) {
-    return
+    return { status: 'ok' }
   },
 })
 server.register({

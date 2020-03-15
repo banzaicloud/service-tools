@@ -70,6 +70,7 @@ var closeServer = promisify(server.stop).bind(server)
 async function closeResources() {
   // handle ongoing requests and close server
   if (closeServer) {
+    console.log('close server')
     await closeServer()
   }
   // ... close databases, message queues and other resources

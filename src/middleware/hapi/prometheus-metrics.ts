@@ -15,14 +15,14 @@ const prometheusMetrics: Hapi.Plugin<IOptions> = {
   version: pgk.version,
   async register(
     server: Hapi.Server,
-    { path, client = promClient, collectDefaultMetrics = true, timeout = 10000, defaultLabels = {} }: IOptions
+    { path, client = promClient, collectDefaultMetrics = true, defaultLabels = {} }: IOptions
   ) {
     if (typeof path !== 'string') {
       throw new TypeError('path in options is required')
     }
 
     if (collectDefaultMetrics) {
-      client.collectDefaultMetrics({ timeout })
+      client.collectDefaultMetrics()
     }
 
     if (Object.keys(defaultLabels).length) {

@@ -4,11 +4,10 @@ import * as promClient from 'prom-client'
 export default function prometheusMetricsFactory({
   client = promClient,
   collectDefaultMetrics = true,
-  timeout = 10000,
   defaultLabels = {},
 } = {}): RequestHandler {
   if (collectDefaultMetrics) {
-    client.collectDefaultMetrics({ timeout })
+    client.collectDefaultMetrics()
   }
 
   if (Object.keys(defaultLabels).length) {

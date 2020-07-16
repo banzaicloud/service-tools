@@ -8,10 +8,7 @@ import * as joi from '@hapi/joi'
 const schema = joi
   .object({
     // runtime environment. Valid values are: production, development, test
-    NODE_ENV: joi
-      .string()
-      .valid('production', 'development', 'test')
-      .default('production'),
+    NODE_ENV: joi.string().valid('production', 'development', 'test').default('production'),
   })
   .unknown()
   .required()

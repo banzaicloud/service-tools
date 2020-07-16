@@ -4,12 +4,7 @@ const joi = require('@hapi/joi')
 
 const schema = joi
   .object({
-    PORT: joi
-      .number()
-      .integer()
-      .min(0)
-      .max(65535)
-      .default(3000),
+    PORT: joi.number().integer().min(0).max(65535).default(3000),
   })
   .unknown()
   .required()

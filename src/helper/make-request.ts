@@ -4,7 +4,7 @@
 
 import * as http from 'http'
 import { AddressInfo } from 'net'
-import got from 'got'
+import got, { Options } from 'got'
 import { promisify } from 'util'
 
 /**
@@ -12,7 +12,7 @@ import { promisify } from 'util'
  */
 export default async function makeRequest(
   server: http.Server,
-  options?: request.RequestPromiseOptions & { endpoint: string }
+  options?: Options & { endpoint?: string },
 ) {
   if (!(server instanceof http.Server)) {
     throw new TypeError('Parameter server is required to be an http.Server instance')

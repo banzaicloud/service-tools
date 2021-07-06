@@ -1,4 +1,4 @@
-import * as joi from '@hapi/joi'
+import * as joi from 'joi'
 import * as express from 'express'
 import * as http from 'http'
 import makeRequest from '../../helper/make-request'
@@ -16,7 +16,7 @@ describe('express request validator middleware', () => {
     })
 
     const server = http.createServer(app)
-    const response = await makeRequest(server, { endpoint: '/?bar=foo' })
+    const response = await makeRequest(server, { endpoint: '?bar=foo' })
     expect(response.statusCode).toEqual(400)
   })
 
@@ -26,7 +26,7 @@ describe('express request validator middleware', () => {
     })
 
     const server = http.createServer(app)
-    const response = await makeRequest(server, { endpoint: '/?foo=bar' })
+    const response = await makeRequest(server, { endpoint: '?foo=bar' })
     expect(response.statusCode).toEqual(200)
     expect(response.body).toEqual({ query: { foo: 'bar' } })
   })

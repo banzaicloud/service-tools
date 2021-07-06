@@ -4,7 +4,7 @@
 
 import * as http from 'http'
 import { AddressInfo } from 'net'
-import * as request from 'request-promise-native'
+import got from 'got'
 import { promisify } from 'util'
 
 /**
@@ -27,13 +27,11 @@ export default async function makeRequest(
   const { port } = server.address() as AddressInfo
 
   // make the request
-  const { endpoint = '/', ...requestOptions } = options || {}
-  const uri = `http://${hostname}:${port}${endpoint}`
-  const response = await request({
-    uri,
-    json: true,
-    resolveWithFullResponse: true,
-    simple: false,
+  const { endpoint = '', ...requestOptions } = options || {}
+  const response = await got(endpoint, {
+    prefixUrl: `http://${hostname}:${port}`,
+    responseType: 'json',
+    throwHttpErrors: false,
     ...requestOptions,
   })
 

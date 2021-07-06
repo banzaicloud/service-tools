@@ -4,7 +4,7 @@
   "dependencies": {
     "@banzaicloud/service-tools": "../../",
     "@hapi/hapi": "19.1.1",
-    "@hapi/joi": "17.1.1",
+    "joi": "17.4.0",
     "stoppable": "1.1.0"
   }
 }

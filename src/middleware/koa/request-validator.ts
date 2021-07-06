@@ -1,4 +1,4 @@
-import * as joi from '@hapi/joi'
+import * as joi from 'joi'
 import { BadRequest } from 'http-errors'
 import { Context, Request } from 'koa'
 

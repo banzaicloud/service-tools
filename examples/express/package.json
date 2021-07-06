@@ -3,7 +3,7 @@
   "main": "index.js",
   "dependencies": {
     "@banzaicloud/service-tools": "../../",
-    "@hapi/joi": "17.1.1",
+    "joi": "17.4.0",
     "express": "4.17.1",
     "stoppable": "1.1.0"
   }

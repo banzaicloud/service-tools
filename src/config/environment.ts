@@ -3,7 +3,7 @@
  * Uses the `NODE_ENV` environment variable
  */
 
-import * as joi from '@hapi/joi'
+import * as joi from 'joi'
 
 const schema = joi
   .object({
@@ -17,7 +17,7 @@ export default function getConfig() {
   const { value: envVars, error } = schema.validate(process.env, { abortEarly: false })
   if (error) {
     // don't expose environment variables in stack traces / logs
-    delete error._object
+    delete error._original
     throw error
   }
 

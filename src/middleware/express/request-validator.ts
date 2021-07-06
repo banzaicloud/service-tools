@@ -1,4 +1,4 @@
-import * as joi from '@hapi/joi'
+import * as joi from 'joi'
 import { NextFunction, Request, RequestHandler, Response } from 'express'
 import { BadRequest } from 'http-errors'
 

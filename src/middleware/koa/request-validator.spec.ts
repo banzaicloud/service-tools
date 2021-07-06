@@ -1,5 +1,5 @@
 import * as http from 'http'
-import * as joi from '@hapi/joi'
+import * as joi from 'joi'
 import * as Koa from 'koa'
 import makeRequest from '../../helper/make-request'
 import { requestValidator } from './'
@@ -17,7 +17,7 @@ describe('koa request validator middleware', () => {
     })
 
     const server = http.createServer(app.callback())
-    const response = await makeRequest(server, { endpoint: '/?bar=foo' })
+    const response = await makeRequest(server, { endpoint: '?bar=foo' })
     expect(response.statusCode).toEqual(400)
   })
 
@@ -30,7 +30,7 @@ describe('koa request validator middleware', () => {
     })
 
     const server = http.createServer(app.callback())
-    const response = await makeRequest(server, { endpoint: '/?foo=bar' })
+    const response = await makeRequest(server, { endpoint: '?foo=bar' })
     expect(response.statusCode).toEqual(200)
     expect(response.body).toEqual({ query: { foo: 'bar' } })
   })

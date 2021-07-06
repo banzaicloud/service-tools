@@ -1,4 +1,4 @@
-import * as joi from '@hapi/joi'
+import * as joi from 'joi'
 import { LoggerOptions } from 'pino'
 
 const schema = joi
@@ -32,7 +32,7 @@ export default function getConfig() {
   const { value: envVars, error } = schema.validate(process.env, { abortEarly: false })
   if (error) {
     // don't expose environment variables in stack traces / logs
-    delete error._object
+    delete error._original
     throw error
   }
 

@@ -11,7 +11,7 @@ describe('hapi prometheus metrics plugin', () => {
 
   it('should serve metrics with default client', async () => {
     server.register({ plugin: prometheusMetrics, options: { path: '/metrics' } })
-    const response = await makeRequest(server.listener, { endpoint: '/metrics' })
+    const response = await makeRequest(server.listener, { endpoint: 'metrics', responseType: 'text' })
     expect(response.statusCode).toEqual(200)
     expect(response.headers['content-type']).toEqual('text/plain; version=0.0.4; charset=utf-8')
   })
@@ -31,7 +31,7 @@ describe('hapi prometheus metrics plugin', () => {
         collectDefaultMetrics: false,
       },
     })
-    const response = await makeRequest(server.listener, { endpoint: '/metrics' })
+    const response = await makeRequest(server.listener, { endpoint: 'metrics', responseType: 'text' })
     expect(response.statusCode).toEqual(200)
     expect(response.body).toEqual('METRICS')
     expect(client.register.metrics).toHaveBeenCalled()
